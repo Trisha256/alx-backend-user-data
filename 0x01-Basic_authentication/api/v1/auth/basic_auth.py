@@ -36,32 +36,34 @@ class BasicAuth(Auth):
         if base64_authorization_header is None:
             return None
         encodings = ['utf-8', 'latin-1']  # Try different encodings
-        
+
         try:
-            decoded_bytes = b64decode(base64_authorization_header, validate=True)
+            decoded_bytes = b64decode(
+                    base64_authorization_header, validate=True)
             return decoded_bytes.decode('utf-8')
         except UnicodeDecodeError:
             pass
-        
+
         try:
-            decoded_bytes = b64decode(base64_authorization_header, validate=True)
+            decoded_bytes = b64decode(
+                    base64_authorization_header, validate=True)
             return decoded_bytes.decode('utf-8', errors='ignore')
         except UnicodeDecodeError:
             pass
 
         for encoding in encodings:
             try:
-                decoded_bytes = b64decode(base64_authorization_header, validate=True)
+                decoded_bytes = b64decode(
+                        base64_authorization_header, validate=True)
                 return decoded_bytes.decode(encoding, errors='ignore')
             except UnicodeDecodeError:
                 continue
-        
-        return None
 
+            return None
 
-    def extract_user_credentials(self,
-            decode_base64_authorization_header: str) \
-                    -> Tuple[Optional[str], Optional[str]]:
+    def extract_user_credentials(
+            self, decode_base64_authorization_header: str) \
+            -> Tuple[Optional[str], Optional[str]]:
         """ Extract user credential
             Return:
                 - username
