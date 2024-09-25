@@ -34,16 +34,18 @@ class BasicAuth(Auth):
                 - Decoded base64 authentication string
         """
         try:
-            decoded_bytes = b64decode(base64_authorization_header, validate=True)
+            decoded_bytes = b64decode(
+                    base64_authorization_header, validate=True)
             return decoded_bytes.decode('utf-8', errors='ignore')
         except (binascii.Error, UnicodeDecodeError):
             return None
 
         if base64_authorization_header is None:
             return None
-        
+
         try:
-            decoded_bytes = b64decode(base64_authorization_header, validate=True)
+            decoded_bytes = b64decode(
+                    base64_authorization_header, validate=True)
             encodings = ['utf-8', 'latin-1']  # Try different encodings
             for encoding in encodings:
                 try:
@@ -52,7 +54,7 @@ class BasicAuth(Auth):
                     continue
             return None
         except (binascii.Error, UnicodeDecodeError):
-            return None 
+            return None
 
     def extract_user_credentials(self,
                                  decode_base64_authorization_header: str) \
