@@ -115,5 +115,4 @@ class BasicAuth(Auth):
         decode_b64_str = self.decode_base64_authorization_header(b64_str)
         # Extract user email and password from the base64 string.
         email, pwd = self.extract_user_credentials(decode_b64_str)
-        
         return self.user_object_from_credentials(email, pwd)
